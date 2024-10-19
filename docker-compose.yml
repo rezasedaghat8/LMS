@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app                 # همگام‌سازی کد پروژه با دایرکتوری داخل کانتینر
+      - ./db.sqlite3:/app/db.sqlite3   # نگه‌داشتن فایل پایگاه داده SQLite3
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis                  # اگر از Redis برای Celery استفاده می‌کنید
+
+  redis:
+    image: redis:alpine         # استفاده از Redis برای Celery
