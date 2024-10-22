@@ -21,3 +21,9 @@ class BorrowingTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BorrowingTransaction
         fields = '__all__'
+        
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+

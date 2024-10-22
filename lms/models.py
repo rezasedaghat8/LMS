@@ -20,7 +20,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=13, unique=True)
     category = models.CharField(max_length=100)
     publication_date = models.DateField()
-    available = models.BooleanField(default=True)
+    available = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -41,7 +41,17 @@ class BorrowingTransaction(models.Model):
     borrow_date = models.DateTimeField(auto_now_add=True)
     return_date = models.DateTimeField(null=True, blank=True)    
     
+    
+class Review(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")
+    user = models.ForeignKey(Borrower, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    review_text = models.TextField()
+    
+    class Meta:
+        unique_together = ['book', 'user'] 
 
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.book.title}"
 
-
-
+    
